@@ -87,6 +87,8 @@ MouseBattery/
 ├─ docs/tray-preview.png     托盘图标示意
 ├─ docs/taskbar.png          任务栏实际效果
 ├─ TUTORIAL.md               实现教程（从枚举 HID 到画托盘图标）
+├─ SECURITY.md               安全策略与漏洞报告方式
+├─ SHA256SUMS.txt            发布文件校验值
 └─ README.md
 ```
 
@@ -118,6 +120,21 @@ Windows 没有公开的“第三方外设电量”任务栏 API，厂商一般�
 - 不联网、不上传任何数据。
 - 不安装服务/驱动。
 - 只读写当前用户目录下的日志和缓存，以及可选的 `HKCU` 开机自启项。
+
+## 安全与校验
+
+- 不联网、不装驱动/服务、不需要管理员权限。
+- 只写 `%LOCALAPPDATA%\MouseBattery\` 和可选的 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`。
+- 预编译的 `dist/MouseBattery.exe` **没有做 Authenticode 签名**，Windows 可能提示“未知发布者”。可以：
+  1. 用 `build.bat` 自己编译；或
+  2. 校验 SHA-256：
+
+     ```powershell
+     Get-FileHash .\dist\MouseBattery.exe -Algorithm SHA256
+     ```
+
+     与 [SHA256SUMS.txt](SHA256SUMS.txt) 对比。
+- 安全问题请按 [SECURITY.md](SECURITY.md) 私密报告，不要开 public issue。
 
 ## 已知限制
 
