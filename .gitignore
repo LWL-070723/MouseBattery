@@ -1,0 +1,9 @@
+build/
+.vs/
+*.obj
+*.pdb
+*.ilk
+*.log
+diag.txt
+state.ini
+*.user
